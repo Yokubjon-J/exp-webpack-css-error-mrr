@@ -3,24 +3,42 @@ import { renderToString } from 'react-dom/server';
 import createEmotionServer from '@emotion/server/create-instance';
 import createCache from '@emotion/cache';
 import devBundle from './devBundle.js';
-import App from './public/App.jsx';
+import App from './public/Editor.jsx';
 import path from 'path';
 import express from 'express';
 import cors from 'cors';
+import createEmotionCache from './public/createEmotionCache.js';
 
 const app = express();
 devBundle.compile(app);
 app.use(cors());
-
-const key = 'custom'
-const cache = createCache({ key })
-
 app.use('/dist', express.static(path.join(process.cwd(), 'dist')));
-console.log(path.join(process.cwd(), 'dist'))
-
 app.get('*', (req, res) => {
-  const html = renderToString(<App />);
-  res.send(html);
+    const cache = createEmotionCache();
+    const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache);
+    let element = (
+        <CacheProvider value={cache}>
+            <App />
+        </CacheProvider>
+    );
+    const emotionChunks = extractCriticalToChunks(element);
+    const emotionCss = constructStyleTagsFromChunks(emotionChunks);
+    res.status(200)
+    .header('Content-Type', 'text/html')
+    .send(
+        `<!doctype html>
+        <html lang="en">
+            <head>
+                <meta charset="utf-8">
+                <title>MERN Chat</title>
+            </head>
+            <body>
+                <div id="root">${element}</div>
+                ${emotionCss}
+                <script defer type="text/javascript" src="./dist/bundle.js"></script>
+            </body>
+        </html>`.trim()
+    );
 });
 
 const port = process.env.PORT || 3000;

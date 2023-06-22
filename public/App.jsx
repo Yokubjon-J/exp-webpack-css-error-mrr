@@ -1,18 +1,13 @@
-import 'remirror/styles/all.css';
-import { BoldExtension } from 'remirror/extensions';
-import { Remirror, useRemirror } from '@remirror/react';
+import createEmotionCache from './createEmotionCache.js';
+import Editor from './Editor.jsx';
+import { CacheProvider } from '@emotion/react'
 
 export default function MyApp() {
-    const { manager, state, onChange } = useRemirror({
-        extensions: () => [new BoldExtension()],
-        content: '<p>I love <b>Remirror</b></p>',
-        selection: 'start',
-        stringHandler: 'html',
-    });
+    const cache = createEmotionCache();
+
     return (
-        <div className='remirror-theme'>
-            {/* the className is used to define css variables necessary for the editor */}
-            <Remirror manager={manager} />
-        </div>
+        <CacheProvider value={cache}>
+            <Editor/>
+        </CacheProvider>
     );
 }

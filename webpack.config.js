@@ -10,7 +10,7 @@ const config = {
     mode: "development",
     entry: '/server.js',
     target: "node",
-    // watch: true, //dangerous!
+    // watch: true, //if uncommented, the app will stop!
     resolve: {
         extensions: ['.css', '.js', '.jsx']
     },
