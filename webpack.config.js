@@ -6,21 +6,13 @@ const CURRENT_WORKING_DIR = process.cwd();
 let isDevelopment = process.env.NODE_ENV === "development";
 
 const config = {
-    name: "index",
+    name: "server",
     mode: "development",
-    devtool: 'eval-source-map',
-    entry: [path.join(CURRENT_WORKING_DIR, '/src/index.js')],
+    entry: '/server.js',
     target: "node",
-    watch: true,
-    devServer: {
-      static: {
-        directory: path.join(CURRENT_WORKING_DIR, 'public/index.html'),
-      },
-      compress: true,
-      port: 9000,
-    },
+    // watch: true, //dangerous!
     resolve: {
-      extensions: ['.css', '.js', '.jsx']
+        extensions: ['.css', '.js', '.jsx']
     },
     output: {
         path: path.join(CURRENT_WORKING_DIR, '/dist/'),
@@ -30,20 +22,20 @@ const config = {
         clean: true,
     },
     externals: [nodeExternals({
-      allowlist: [/\.(?!(?:jsx?|json)$).{1,5}$/i]
+        allowlist: [/\.(?!(?:jsx?|json)$).{1,5}$/i]
     })],
     module: {
-      rules: [
-        {
-          test: /\.(js|jsx)$/,
-          exclude: /node_modules/,
-          use: ["babel-loader"],
-        },
-        {
-          test: /\.css$/,
-          use: ["style-loader", "css-loader"],
-        },
-      ],
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: ["babel-loader"],
+            },
+            {
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"],
+            },
+        ],
     },
 }
 module.exports = config;

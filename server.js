@@ -1,16 +1,33 @@
-const http = require("http");
-const hostname = "127.0.0.1";
-const port = 3000;
+import { CacheProvider } from '@emotion/react';
+import { renderToString } from 'react-dom/server';
+import createEmotionServer from '@emotion/server/create-instance';
+import createCache from '@emotion/cache';
+import devBundle from './devBundle.js';
+import App from './public/App.jsx';
+import path from 'path';
+import express from 'express';
+import cors from 'cors';
 
-//Create HTTP server and listen on port 3000 for requests
-const server = http.createServer((req, res) => {
-  //Set the response HTTP header with HTTP status and Content type
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "text/plain");
-  res.end("Hello World\n");
+console.log(999)
+const app = express();
+devBundle.compile(app);
+app.use(cors());
+
+const key = 'custom'
+const cache = createCache({ key })
+
+app.use('/dist', express.static(path.join(process.cwd(), 'dist')));
+console.log(path.join(process.cwd(), 'dist'))
+
+app.get('*', (req, res) => {
+  const html = renderToString(<App />);
+  res.send(html);
 });
 
-//listen for request on port 3000, and as a callback function have the port listened on logged
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+const port = process.env.PORT || 3000;
+app.listen(port, function onStart(err) {
+    if (err) {
+        console.log("you got error");
+    }
+    console.info('Server started on port: ', port)
 });
