@@ -5,7 +5,7 @@ const CURRENT_WORKING_DIR = process.cwd();
 const nodeExternals = require('webpack-node-externals');
 
 let isDevelopment = process.env.NODE_ENV === "development";
-console.log(path.join(CURRENT_WORKING_DIR, '/dist/'))
+
 const config = {
     name: "browser",
     mode: "development",

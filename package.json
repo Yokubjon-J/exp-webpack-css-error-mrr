@@ -28,9 +28,12 @@
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
+    "@remirror/pm": "^2.0.6",
+    "@remirror/react": "^2.0.29",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "remirror": "^2.0.32"
   }
 }

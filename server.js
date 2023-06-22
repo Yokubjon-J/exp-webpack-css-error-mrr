@@ -8,7 +8,6 @@ import path from 'path';
 import express from 'express';
 import cors from 'cors';
 
-console.log(999)
 const app = express();
 devBundle.compile(app);
 app.use(cors());
