@@ -1,9 +1,8 @@
 import { CacheProvider } from '@emotion/react';
-import { renderToString } from 'react-dom/server';
+import ReactDOMServer from 'react-dom/server';
 import createEmotionServer from '@emotion/server/create-instance';
-import createCache from '@emotion/cache';
 import devBundle from './devBundle.js';
-import App from './public/Editor.jsx';
+import App from './public/App.jsx';
 import path from 'path';
 import express from 'express';
 import cors from 'cors';
@@ -16,13 +15,14 @@ app.use('/dist', express.static(path.join(process.cwd(), 'dist')));
 app.get('*', (req, res) => {
     const cache = createEmotionCache();
     const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache);
-    let element = (
+    let element = ReactDOMServer.renderToString(
         <CacheProvider value={cache}>
             <App />
         </CacheProvider>
     );
     const emotionChunks = extractCriticalToChunks(element);
     const emotionCss = constructStyleTagsFromChunks(emotionChunks);
+    console.log(emotionCss)
     res.status(200)
     .header('Content-Type', 'text/html')
     .send(
@@ -31,10 +31,10 @@ app.get('*', (req, res) => {
             <head>
                 <meta charset="utf-8">
                 <title>MERN Chat</title>
+                ${emotionCss}
             </head>
             <body>
                 <div id="root">${element}</div>
-                ${emotionCss}
                 <script defer type="text/javascript" src="./dist/bundle.js"></script>
             </body>
         </html>`.trim()
