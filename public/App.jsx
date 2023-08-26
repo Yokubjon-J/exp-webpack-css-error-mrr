@@ -1,5 +1,5 @@
 // import createEmotionCache from './createEmotionCache.js';
-import Editor from './Editor.jsx';
+import EditorLazy from './EditorLazy.jsx';
 // import { CacheProvider } from '@emotion/react'
 
 export default function MyApp() {
@@ -7,7 +7,7 @@ export default function MyApp() {
 
     return (
         // <CacheProvider value={cache}>
-            <Editor/>
+            <EditorLazy/>
         // </CacheProvider>
     );
 }
