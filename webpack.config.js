@@ -22,7 +22,7 @@ const config = {
         clean: true,
     },
     externals: [nodeExternals({
-        allowlist: [/\.(?!(?:jsx?|json)$).{1,5}$/i]
+        allowlist: [/\.(?!(?:jsx?|css|json)$).{1,5}$/i]
     })],
     module: {
         rules: [
@@ -30,10 +30,6 @@ const config = {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: ["babel-loader"],
-            },
-            {
-                test: /\.css$/,
-                use: ["style-loader", "css-loader"],
             },
         ],
     },

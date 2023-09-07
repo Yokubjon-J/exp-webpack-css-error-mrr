@@ -1,30 +1,11 @@
-// import 'remirror/styles/all.css';
-// import { BoldExtension } from 'remirror/extensions';
-// import { Remirror, useRemirror } from '@remirror/react';
-
-// export default function MyApp() {
-//     const { manager, state, onChange } = useRemirror({
-//         extensions: () => [new BoldExtension()],
-//         content: '<p>I love <b>Remirror</b></p>',
-//         selection: 'start',
-//         stringHandler: 'html',
-//     });
-
-//     return (
-        
-//             <div className='remirror-theme'>
-//             {/* the className is used to define css variables necessary for the editor */}
-//                 <Remirror manager={manager} initialContent={state}/>
-//             </div>
-//     );
-// }
-
-import 'remirror/styles/all.css';
+import remirrorEditorStyles from 'remirror/styles/all.css';
+// import 'remirror/styles/all.css'; //this is from remirror docs. But it won't work. The above is a part of a (temporary) hack.
 
 import { BoldExtension } from 'remirror/extensions';
 import { EditorComponent, Remirror, useRemirror, useActive, useChainedCommands } from '@remirror/react';
 
 const Menu = () => {
+  console.log('this is a hack in order to get the styles injected: ', remirrorEditorStyles);
     // Using command chaining
     const chain = useChainedCommands();
     const active = useActive();
