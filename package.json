@@ -28,6 +28,7 @@
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
+    "@mui/material": "^5.14.8",
     "@remirror/pm": "^2.0.6",
     "@remirror/react": "^2.0.29",
     "cors": "^2.8.5",

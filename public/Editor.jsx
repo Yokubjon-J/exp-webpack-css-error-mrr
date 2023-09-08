@@ -12,25 +12,8 @@ import { EditorComponent,
     useRemirror 
   } from '@remirror/react';
 
-const Menu = () => {
-    console.log('this is a hack in order to get the styles injected: ', remirrorEditorStyles);
-        const { toggleBold, focus } = useCommands();
-        
-        return (
-            <button
-                onClick={() => {
-                    toggleBold();
-                    focus();
-                }}
-                style={{ fontWeight: active.bold() ? 'bold' : undefined }}
-                onClick={() => toggleBold()} disabled={toggleBold.enabled() === false}
-            >
-                B
-            </button>
-        );
-    };
-
 export default function MyApp() {
+    console.log('this is a hack in order to get the styles injected: ', remirrorEditorStyles);
     const { manager, state, onChange } = useRemirror({
         extensions: () => [new BoldExtension(), new ItalicExtension()],
         content: '<p>I love <b>Remirror</b></p>',

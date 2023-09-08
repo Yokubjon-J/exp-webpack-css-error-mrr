@@ -1,12 +1,15 @@
 import { CacheProvider } from '@emotion/react';
 import ReactDOMServer from 'react-dom/server';
 import createEmotionServer from '@emotion/server/create-instance';
+import createEmotionCache from './public/createEmotionCache.js';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './public/theme.js';
 import devBundle from './devBundle.js';
 import App from './public/App.jsx';
 import path from 'path';
 import express from 'express';
 import cors from 'cors';
-import createEmotionCache from './public/createEmotionCache.js';
 
 const app = express();
 devBundle.compile(app);
@@ -17,7 +20,9 @@ app.get('*', (req, res) => {
     const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache);
     let element = ReactDOMServer.renderToString(
         <CacheProvider value={cache}>
-            <App />
+            <ThemeProvider theme={theme}>
+                <App />
+            </ThemeProvider>
         </CacheProvider>
     );
     const emotionChunks = extractCriticalToChunks(element);
@@ -31,6 +36,12 @@ app.get('*', (req, res) => {
             <head>
                 <meta charset="utf-8">
                 <title>MERN Chat</title>
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+                <link
+                  rel="stylesheet"
+                  href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap"
+                />
                 ${emotionCss}
             </head>
             <body>
