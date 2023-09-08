@@ -1,4 +1,5 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
+import FacebookCircularProgress from './components/Loading.jsx';
 
 const Editor = lazy(() => import('./Editor.jsx'));
 
@@ -11,7 +12,7 @@ export default () => {
 
     if (isClient) {
         return (
-            <Suspense fallback={"loading editor..."}>
+            <Suspense fallback={<FacebookCircularProgress/>}>
                 <Editor />
             </Suspense>
         )
