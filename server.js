@@ -2,7 +2,7 @@ import { CacheProvider } from '@emotion/react';
 import ReactDOMServer from 'react-dom/server';
 import createEmotionServer from '@emotion/server/create-instance';
 import createEmotionCache from './public/createEmotionCache.js';
-// import CssBaseline from '@mui/material/CssBaseline';
+// import CssBaseline from '@mui/material/CssBaseline';//this is causing some styling conflicts
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './public/theme.js';
 import devBundle from './devBundle.js';
