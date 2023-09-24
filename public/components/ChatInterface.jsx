@@ -118,9 +118,9 @@ export default (props) => {
                 <Typography paragraph>
                     Altan Xanate
                 </Typography>
-                {/* <Box component="div">
+                <Box component="div">
                     <EditorLazy/>
-                </Box> */}
+                </Box>
             </Box>
         </Box>
     );
